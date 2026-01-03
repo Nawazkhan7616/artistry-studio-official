@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expert Beauty Artistry | Portfolio</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .serif {
+        font-family: "Playfair Display", serif;
+      }
+      .bg-pink-soft {
+        background-color: #fff5f6;
+      }
+      .no-scroll {
+        overflow: hidden !important;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+
+      /* Full-screen splash image style */
+      #splash-img {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover; /* This makes it fill the screen without stretching */
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-pink-soft text-stone-800"
+    x-data="{ imgModal: false, imgPath: '' }">
+    <div
+      id="splash-screen"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.8s ease-out;
+      ">
+      <img src="Intro.png" alt="Artistry Studio" id="splash-img" />
+
+      <div
+        style="
+          position: relative;
+          z-index: 10000;
+          margin-top: auto;
+          padding-bottom: 50px;
+          text-align: center;
+        ">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          ">
+          <span>Loading Experience</span>
+        </div>
+      </div>
+    </div>
+
+    <nav
+      class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-rose-100">
+      <div
+        class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <span
+          class="serif text-xl font-bold tracking-widest uppercase text-rose-800"
+          >Artistry Studio</span
+        >
+        <div
+          class="hidden md:flex space-x-6 text-[10px] uppercase tracking-[0.2em] font-bold">
+          <a href="#about" class="hover:text-rose-600">The Artist</a>
+          <a href="#portfolio" class="hover:text-rose-600">Portfolio</a>
+          <a
+            href="booking.html"
+            class="bg-rose-800 text-white px-5 py-2 hover:bg-rose-700 transition rounded-full"
+            >Book Now</a
+          >
+          <div class="hidden md:flex items-center space-x-6">
+            <a
+              href="tel:+918299139886"
+              class="text-rose-800 font-bold text-sm hover:text-rose-600"
+              >📞 +91 8299139886</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section id="about" class="relative pt-32 pb-24 px-6 overflow-hidden">
+      <div
+        class="absolute top-0 left-1/4 w-96 h-96 bg-rose-200/40 rounded-full blur-[120px] -z-10"></div>
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div
+          class="relative"
+          x-data="{ hover: false }"
+          @mouseenter="hover = true"
+          @mouseleave="hover = false">
+          <div
+            class="absolute -inset-4 border border-rose-300 rounded-2xl -z-10 transition-all duration-700"
+            :class="hover ? 'rotate-3 scale-105' : 'rotate-0 scale-100'"></div>
+          <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src="profile.png"
+              alt="Lead Artist"
+              class="w-full object-cover transition duration-1000"
+              :class="hover ? 'scale-110' : 'scale-100'" />
+          </div>
+        </div>
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <span
+              class="inline-block px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest"
+              >The Visionary Artist</span
+            >
+            <h1 class="serif text-5xl md:text-7xl leading-tight text-stone-900">
+              Crafting <span class="text-rose-600 italic">Timeless</span> Beauty
+            </h1>
+            <p class="text-stone-600 text-lg leading-relaxed max-w-lg">
+              Specializing in
+              <span
+                class="text-rose-800 font-semibold underline decoration-rose-300"
+                >HD Bridal looks</span
+              >.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="portfolio"
+      class="py-24 bg-white rounded-t-[50px] shadow-inner"
+      x-data="{ activeTab: 'makeup' }">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="serif text-5xl text-stone-900 mb-12">
+          The Artistry Portfolio
+        </h2>
+        <div
+          class="flex justify-center gap-8 mb-16 border-b border-rose-50 pb-4">
+          <button
+            @click="activeTab = 'makeup'"
+            :class="activeTab === 'makeup' ? 'text-rose-700 border-b-2 border-rose-700' : 'text-stone-300'"
+            class="serif text-2xl pb-2 outline-none">
+            Makeup
+          </button>
+          <button
+            @click="activeTab = 'mehndi'"
+            :class="activeTab === 'mehndi' ? 'text-rose-700 border-b-2 border-rose-700' : 'text-stone-300'"
+            class="serif text-2xl pb-2 outline-none">
+            Mehndi
+          </button>
+        </div>
+        <div
+          x-show="activeTab === 'makeup'"
+          class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <template x-for="i in [1,2,3,4,5,6,7,8,9]">
+            <div
+              @click="imgModal = true; imgPath = 'img'+i+'.png'"
+              class="rounded-2xl overflow-hidden aspect-[4/5] bg-rose-50 cursor-pointer">
+              <img
+                :src="'img'+i+'.png'"
+                class="w-full h-full object-cover hover:scale-110 transition duration-500" />
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <div
+      x-show="imgModal"
+      x-cloak
+      class="fixed inset-0 z-[100] flex items-center justify-center bg-rose-950/95 p-4">
+      <button
+        @click="imgModal = false"
+        class="absolute top-6 right-6 text-white text-5xl">
+        &times;
+      </button>
+      <img :src="imgPath" class="max-h-full max-w-full rounded-xl" />
+    </div>
+
+    <footer
+      class="py-12 text-center text-rose-300 text-[10px] uppercase tracking-[0.3em] bg-stone-900">
+      &copy; 2025 Artistry Studio • Timeless Beauty Artistry
+      <a
+        href="admin.html"
+        class="text-[8px] text-stone-300 hover:text-rose-400 mt-2 block"
+        >Access Dashboard</a
+      >
+    </footer>
+
+    <script>
+      (function () {
+        const splash = document.getElementById("splash-screen");
+        document.body.classList.add("no-scroll");
+
+        const hideSplash = () => {
+          splash.style.opacity = "0";
+          setTimeout(() => {
+            splash.style.display = "none";
+            document.body.classList.remove("no-scroll");
+          }, 800);
+        };
+
+        // Hide after 3 seconds
+        setTimeout(hideSplash, 3000);
+
+        // Emergency fallback if image fails
+        document.getElementById("splash-img").onerror = hideSplash;
+      })();
+    </script>
+  </body>
+</html>

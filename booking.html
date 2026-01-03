@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // Force redirect to artist.html on refresh
+      if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        window.location.href = "artist.html";
+      }
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservation | Artistry Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff5f6;
+      }
+      .serif {
+        font-family: "Playfair Display", serif;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4 md:p-10">
+    <div
+      x-data="{ 
+            selectedServices: [], 
+            agreed: false, 
+            policyOpen: false,
+            uName: localStorage.getItem('noor_name') || '',
+            uPhone: '',
+            uEmail: localStorage.getItem('noor_email') || '',
+            uDate: '',
+            uTime: ''
+          }"
+      class="max-w-2xl w-full bg-white p-6 md:p-10 rounded-3xl shadow-2xl border border-rose-100 my-10">
+      <div class="text-center mb-8">
+        <a
+          href="artist.html"
+          class="text-rose-400 hover:text-rose-600 text-[10px] uppercase tracking-widest font-bold"
+          >← Back to Portfolio</a
+        >
+        <h1 class="serif text-3xl md:text-4xl text-rose-800 mt-4">
+          Reservation
+        </h1>
+      </div>
+
+      <form id="realBookingForm" class="space-y-6">
+        <div>
+          <label class="block text-sm font-bold text-rose-700 mb-2"
+            >Full Name</label
+          >
+          <input
+            type="text"
+            id="custName"
+            x-model="uName"
+            required
+            placeholder="Enter your name"
+            @input="localStorage.setItem('noor_name', uName); $el.classList.remove('border-red-500', 'ring-2', 'ring-red-200')"
+            class="w-full p-4 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold text-rose-700 mb-2"
+            >WhatsApp Number</label
+          >
+          <div class="relative">
+            <span
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500 font-bold"
+              >+91</span
+            >
+            <input
+              type="tel"
+              id="custPhone"
+              x-model="uPhone"
+              required
+              pattern="[0-9]{10}"
+              title="10-digit phone number"
+              placeholder="Enter WhatsApp Number Only"
+              @input="$el.classList.remove('border-red-500', 'ring-2', 'ring-red-200')"
+              class="w-full p-4 pl-14 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold text-rose-700 mb-2"
+            >Email Address</label
+          >
+          <input
+            type="email"
+            id="custEmail"
+            x-model="uEmail"
+            required
+            placeholder="email@example.com"
+            @input="localStorage.setItem('noor_email', uEmail); $el.classList.remove('border-red-500', 'ring-2', 'ring-red-200')"
+            class="w-full p-4 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold text-rose-700 mb-4"
+            >Select Artistry Service</label
+          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <template
+              x-for="item in [
+              {id: 'Bridal Artistry', emoji: '💄', sub: 'High-Definition'},
+              {id: 'Intricate Mehndi', emoji: '🌿', sub: 'Traditional & Modern'},
+              {id: 'Bespoke Styling', emoji: '✨', sub: 'Signature Hair'},
+              {id: 'Brow Shaping', emoji: '📐', sub: 'Precision Design'}
+            ]">
+              <label
+                class="relative flex flex-col p-5 border-2 rounded-2xl cursor-pointer transition-all duration-300 transform"
+                :class="selectedServices.includes(item.id) ? 'border-rose-500 bg-rose-50 scale-105 shadow-md' : 'border-rose-100 bg-white'">
+                <input
+                  type="checkbox"
+                  name="service"
+                  :value="item.id"
+                  x-model="selectedServices"
+                  class="hidden" />
+                <div
+                  x-show="selectedServices.includes(item.id)"
+                  x-cloak
+                  class="absolute top-2 right-2 text-rose-500">
+                  ❤️
+                </div>
+                <span class="text-2xl mb-1" x-text="item.emoji"></span>
+                <span class="font-bold text-stone-800" x-text="item.id"></span>
+                <span
+                  class="text-[10px] text-rose-400 uppercase tracking-widest font-semibold"
+                  x-text="item.sub"></span>
+              </label>
+            </template>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-rose-400 mb-1"
+              >Date</label
+            >
+            <input
+              type="date"
+              id="custDate"
+              x-model="uDate"
+              required
+              class="w-full p-4 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-rose-400 mb-1"
+              >Time (10 AM - 6 PM)</label
+            >
+            <input
+              type="time"
+              id="custTime"
+              x-model="uTime"
+              min="10:00"
+              max="18:00"
+              required
+              class="w-full p-4 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-300" />
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-3 text-xs text-stone-500">
+          <input
+            type="checkbox"
+            id="terms"
+            x-model="agreed"
+            required
+            class="mt-1 h-5 w-5 rounded border-rose-200 text-rose-600 cursor-pointer" />
+          <label for="terms" class="cursor-pointer"
+            >I agree to the
+            <button
+              type="button"
+              @click="policyOpen = true"
+              class="text-rose-700 font-bold underline">
+              Booking Policy
+            </button></label
+          >
+        </div>
+
+        <button
+          type="submit"
+          :class="(uName && uEmail && uDate && uTime && selectedServices.length > 0 && agreed) ? 'bg-rose-800 hover:bg-rose-700 shadow-lg' : 'bg-stone-300 opacity-80 cursor-not-allowed'"
+          class="w-full text-white font-bold py-4 rounded-xl transition-all duration-300">
+          Confirm Request
+        </button>
+
+        <div class="mt-10 pt-8 border-t border-rose-100">
+          <p
+            class="text-[10px] uppercase tracking-[0.2em] text-stone-400 mb-6 text-center font-bold italic">
+            Questions? Contact the Artist Directly
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href="tel:+918299139886"
+              class="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white border border-rose-200 rounded-2xl text-rose-800 hover:bg-rose-50 transition shadow-sm group">
+              <span class="group-hover:scale-110 transition duration-300"
+                >📞</span
+              >
+              <span class="font-bold text-xs">CALL US</span>
+            </a>
+            <a
+              href="https://wa.me/918299139886"
+              target="_blank"
+              class="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-emerald-500 text-white rounded-2xl hover:bg-emerald-600 transition shadow-md group">
+              <span class="group-hover:rotate-12 transition duration-300"
+                >💬</span
+              >
+              <span class="font-bold text-xs">WHATSAPP</span>
+            </a>
+          </div>
+        </div>
+      </form>
+
+      <div
+        x-show="policyOpen"
+        x-cloak
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-rose-900/40 backdrop-blur-sm">
+        <div
+          @click.away="policyOpen = false"
+          class="bg-white w-full max-w-md p-8 rounded-3xl relative shadow-2xl">
+          <h3 class="serif text-2xl text-rose-800 mb-4 text-center">
+            Booking Policy
+          </h3>
+          <p class="text-sm text-stone-600 mb-6 text-center leading-relaxed">
+            Appointments are pending until confirmed via WhatsApp. Please arrive
+            10 minutes before your scheduled slot.
+          </p>
+          <button
+            type="button"
+            @click="policyOpen = false"
+            class="w-full bg-rose-100 text-rose-800 font-bold py-3 rounded-xl hover:bg-rose-200 transition">
+            I Understand
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("realBookingForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const services = Array.from(
+            document.querySelectorAll('input[name="service"]:checked')
+          ).map((cb) => cb.value);
+
+          const data = {
+            name: document.getElementById("custName").value,
+            email: document.getElementById("custEmail").value,
+            phone: document.getElementById("custPhone").value,
+            service: services.join(", "),
+            date: document.getElementById("custDate").value,
+            time: document.getElementById("custTime").value,
+          };
+
+          try {
+            const response = await fetch("http://localhost:5000/api/bookings", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+              alert("Success! Your request has been sent to the Artist.");
+              localStorage.clear();
+              window.location.href = "artist.html";
+            }
+          } catch (error) {
+            alert("Server error. Please ensure your backend is running.");
+          }
+        });
+    </script>
+  </body>
+</html>
